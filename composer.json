@@ -5,6 +5,10 @@
     "homepage": "https://github.com/enscope/yii2-airbrake",
     "type": "yii2-extension",
     "license": "MIT License",
+    "support": {
+        "issues": "https://github.com/enscope/yii2-airbrake/issues",
+        "source": "https://github.com/enscope/yii2-airbrake"
+    },
     "authors": [
         {
             "name": "Miro Hudak",
@@ -13,6 +17,10 @@
         }
     ],
     "minimum-stability": "stable",
+    "require": {
+        "yiisoft/yii2": "~2.0",
+        "airbrake/phpbrake": "~0.2"
+    },
     "autoload": {
         "psr-4": {
             "enscope\\Yii2\\Ext\\Airbrake\\": ""
