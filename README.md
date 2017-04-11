@@ -71,12 +71,14 @@ timeline with deployments).
 ### Usage
 To use `ConsoleController`, `AirbrakeService` should be configured as component.
 
+    import enscope\Yii2\Ext\Airbrake\ConsoleController;
+    
     return [
         // ...
         'controllerMap' => [
             // ...
             'airbrake' => [
-                'class' => enscope\Yii2\Ext\Airbrake\ConsoleController::className(),
+                'class' => ConsoleController::className(),
                 'airbrakeService' => [component-name], // default "airbrakeService"
             ],
         ],
@@ -98,7 +100,7 @@ You can configure Yii2 logger to log errors automatically to Airbrake Service.
 ### Usage
 To use `ConsoleController`, `AirbrakeService` should be configured as component.
 
-    import enscope\Yii2\Ext\Airbrake\AirbrakeTarget
+    import enscope\Yii2\Ext\Airbrake\AirbrakeTarget;
     
     return [
         // ...
