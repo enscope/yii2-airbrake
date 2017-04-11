@@ -1,0 +1,21 @@
+{
+    "name": "enscope/yii2-airbrake",
+    "description": "Yii2 Airbrake integration",
+    "keywords": ["yii2", "extension", "airbrake", "error", "reporting", "logging"],
+    "homepage": "https://github.com/enscope/yii2-airbrake",
+    "type": "yii2-extension",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Miro Hudak",
+            "email": "mhudak@dev.enscope.com",
+            "homepage": "http://www.enscope.com/"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "enscope\\Yii2\\Ext\\Airbrake\\": ""
+        }
+    }
+}
