@@ -4,13 +4,16 @@ namespace juanisorondo\phpbrake;
 
 use Airbrake\ErrorHandler;
 use Airbrake\Errors\Base;
+use Airbrake\Exception;
 use Airbrake\Http\Factory;
 use Airbrake\Instance;
 use Airbrake\Notifier;
 use Closure;
 use InvalidArgumentException;
 use Throwable;
+use Yii;
 use yii\base\Component;
+use yii\base\InvalidParamException;
 
 class AirbrakeService extends Component {
 
@@ -43,7 +46,7 @@ class AirbrakeService extends Component {
     public $host = 'api.airbrake.io';
 
     /** @var string HTTP client to use */
-    public $httpClient = self::CLIENT_DEFAULT;
+    public $httpClient;
 
     /** @var bool If true, global instance is set on init() */
     public $setGlobalInstance = true;
@@ -62,8 +65,8 @@ class AirbrakeService extends Component {
      * This method is invoked at the end of the constructor after the object
      * is initialized with the given configuration.
      *
-     * @throws \Airbrake\Exception
-     * @throws \yii\base\InvalidParamException
+     * @throws Exception
+     * @throws InvalidParamException
      */
     public function init() {
         parent::init();
@@ -82,7 +85,7 @@ class AirbrakeService extends Component {
             'projectKey' => $this->projectKey,
             'appVersion' => $this->appVersion,
             'environment' => $this->environment,
-            'rootDirectory' => \Yii::getAlias($this->rootDirectory),
+            'rootDirectory' => Yii::getAlias($this->rootDirectory),
             'host' => $this->host,
             'httpClient' => $this->httpClient,
         ]);
@@ -161,7 +164,7 @@ class AirbrakeService extends Component {
      * @return bool True, if request was sent successfully
      *
      * @throws InvalidArgumentException
-     * @throws \Airbrake\Exception
+     * @throws Exception
      */
     public function trackDeploy($revision, $username = 'system', $repository = null) {
         $client = Factory::createHttpClient($this->httpClient);

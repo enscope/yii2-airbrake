@@ -5,6 +5,8 @@ namespace juanisorondo\phpbrake;
 use Airbrake\Errors\Error;
 use Airbrake\Errors\Notice;
 use Airbrake\Errors\Warning;
+use Throwable;
+use Yii;
 use yii\base\InvalidParamException;
 use yii\log\Logger;
 use yii\log\Target;
@@ -32,7 +34,7 @@ class AirbrakeTarget extends Target {
             /** @var array|null $airbrakeNotice */
             $airbrakeNotice = null;
 
-            if ($content instanceof \Throwable) {
+            if ($content instanceof Throwable) {
                 // if exception (throwable) is provided, build
                 // notice using default facilities
                 $airbrakeNotice = $this->airbrakeService->buildNotice($content);
@@ -89,7 +91,7 @@ class AirbrakeTarget extends Target {
                 throw new InvalidParamException("AirbrakeService instance not available. Set 'airbrakeService' property.");
             }
 
-            $this->airbrakeService = \Yii::$app->get($this->airbrakeService);
+            $this->airbrakeService = Yii::$app->get($this->airbrakeService);
             $this->assertServiceAvailable();
         }
     }
