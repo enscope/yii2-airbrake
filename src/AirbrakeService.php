@@ -8,7 +8,6 @@ use Airbrake\Exception;
 use Airbrake\Http\Factory;
 use Airbrake\Instance;
 use Airbrake\Notifier;
-use Closure;
 use InvalidArgumentException;
 use Throwable;
 use Yii;
@@ -36,7 +35,7 @@ class AirbrakeService extends Component {
     /** @var string|null Run-time environment (optional) */
     public $environment;
 
-    /** @var callable[]|Closure[] Items of the array will be added as filters */
+    /** @var ParamsFilter[] Items of the array will be added as filters */
     public $filters;
 
     /** @var string|null Root directory of application (optional) */
@@ -91,8 +90,9 @@ class AirbrakeService extends Component {
         ]);
 
         if (is_array($this->filters)) {
-            foreach ($this->filters as $filter) {
-                $this->addFilter($filter);
+            foreach ($this->filters as $filterConfig) {
+                $filter = Yii::createObject($filterConfig);
+                $this->addFilter($filter->getParamsFilter());
             }
 
             unset($this->filters);
