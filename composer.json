@@ -1,29 +1,22 @@
 {
-    "name": "enscope/yii2-airbrake",
-    "description": "Yii2 Airbrake integration",
+    "name": "juanisorondo/yii2-phpbrake",
+    "description": "Yii2 Phpbrake integration",
     "keywords": ["yii2", "extension", "airbrake", "error", "reporting", "logging"],
-    "homepage": "https://github.com/enscope/yii2-airbrake",
+    "homepage": "https://github.com/juanisorondo/yii2-phpbrake",
     "type": "yii2-extension",
     "license": "MIT License",
     "support": {
-        "issues": "https://github.com/enscope/yii2-airbrake/issues",
-        "source": "https://github.com/enscope/yii2-airbrake"
+        "issues": "https://github.com/juanisorondo/yii2-phpbrake/issues",
+        "source": "https://github.com/juanisorondo/yii2-phpbrake"
     },
-    "authors": [
-        {
-            "name": "Miro Hudak",
-            "email": "mhudak@dev.enscope.com",
-            "homepage": "http://www.enscope.com/"
-        }
-    ],
     "minimum-stability": "stable",
     "require": {
-        "yiisoft/yii2": "~2.0",
-        "airbrake/phpbrake": "~0.2"
+        "yiisoft/yii2": ">=2.0.5",
+        "airbrake/phpbrake": "^0.4"
     },
     "autoload": {
-        "psr-4": {
-            "enscope\\Yii2\\Ext\\Airbrake\\": ""
-        }
+        "classmap": [
+            "src/"
+        ]
     }
 }
