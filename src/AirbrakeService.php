@@ -208,6 +208,10 @@ class AirbrakeService extends Component {
         switch ($env) {
             case 'prod':
                 return 'production';
+            case 'stag':
+                return 'staging';
+            case 'test':
+                return 'test';
             case 'dev':
                 return 'development';
         }
