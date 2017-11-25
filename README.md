@@ -3,45 +3,46 @@ Airbrake integration for Yii2, which wraps around official
 [Airbrake PHP library (airbrake/phpbrake)](https://github.com/airbrake/phpbrake).
 
 ## Installation
-    composer require enscope/yii2-airbrake
+    composer require juanisorondo/yii2-airbrake
 
 ## Usage
 While it is not explicitly required, it is recommended to configure the `AirbrakeService`
 as a component in environment (or even common) configuration, so it is easily accessible
 from the whole application (using i.e. `Yii::$app->get('airbrakeService')`).
 
-    import enscope\Yii2\Ext\Airbrake\AirbrakeService;
-    import enscope\Yii2\Ext\Airbrake\AirbrakeFilterFactory;
-
-    return [
+```php
+return [
+    // ...
+    'components' => [
         // ...
-        'components' => [
-            // ...
-            'airbrakeService' => [
-                'class' => AirbrakeService::className(),
-                
-                'enabled' => true, // default TRUE
-                
-                'projectId' => [*your-project-id],
-                'projectKey' => [*your-project-key],
-                
-                'environment' => YII_ENV, // default NULL
-                'appVersion' => [your-app-version], // default NULL
-                'rootDirectory' => [source-root-directory], // default NULL
-                'host' => [api-endpoint-host], // default "api.airbrake.io"
-                'httpClient' => [http-client-type], // default "default"
-                
-                'setGlobalInstance' => [boolean], // default TRUE
-                'setErrorHandler' => [boolean], // default FALSE
-                
-                'filters' => [ // default NULL
-                    // 'PHPSESSID' and '_csrf' parameters should not be transferred to airbrake
-                    AirbrakeFilterFactory::createParamsFilter(['PHPSESSID', '_csrf']),
+        'airbrakeService' => [
+            'class' => 'juanisorondo\phpbrake\AirbrakeService',
+
+            'enabled' => true, // default TRUE
+
+            'projectId' => 'YOUR_PROJECT_ID',
+            'projectKey' => 'YOUR_PROJECT_KEY',
+
+            'environment' => YII_ENV, // default NULL
+            'appVersion' => [your-app-version], // default NULL
+            'rootDirectory' => [source-root-directory], // default NULL
+            'host' => [api-endpoint-host], // default "api.airbrake.io"
+            'httpClient' => [http-client-type], // default "default"
+
+            'setGlobalInstance' => [boolean], // default TRUE
+            'setErrorHandler' => [boolean], // default FALSE
+
+            'filters' => [ // default NULL
+                // 'PHPSESSID' and '_csrf' parameters should not be transferred to airbrake
+                [
+                    'class' => 'juanisorondo\phpbrake\ParamsFilter',
+                    'params' => ['PHPSESSID', '_csrf'],
                 ],
             ],
         ],
-    ];
-
+    ],
+];
+```
 *Configuration options marked with asterisk are required, all other options are optional.*
 
 * `rootDirectory`: should be set to your sources root to allow shortening of file paths
@@ -99,27 +100,20 @@ You can configure Yii2 logger to log errors automatically to Airbrake Service.
 
 ### Usage
 To use `ConsoleController`, `AirbrakeService` should be configured as component.
-
-    import enscope\Yii2\Ext\Airbrake\AirbrakeTarget;
-    
-    return [
-        // ...
-        'components' => [
-            // ...
-            'log' => [
-                // ...
-                'targets' => [
-                    // ...
-                    [
-                        'class' => AirbrakeTarget::className(),
-                        'airbrakeService' => 'airbrakeService',
-                        'levels' => ['error'],
-                    ],
+```php
+return [
+    'components' => [
+        'log' => [
+            'targets' => [
+                [
+                    'class' => 'juanisorondo\phpbrake\AirbrakeTarget',
+                    'levels' => ['error'],
                 ],
             ],
         ],
-    ];
-
+    ],
+];
+```
 The target currently does not expose any other configuration options
 other then those exposed by `yii\log\Target`, except the service component:
 * `airbrakeService`: name of the component or initialized instance
