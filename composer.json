@@ -12,11 +12,17 @@
     "minimum-stability": "stable",
     "require": {
         "yiisoft/yii2": ">=2.0.5",
-        "airbrake/phpbrake": "^0.4"
+        "airbrake/phpbrake": "^0.5"
     },
     "autoload": {
         "classmap": [
             "src/"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
