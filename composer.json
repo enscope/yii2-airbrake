@@ -4,7 +4,7 @@
     "keywords": ["yii2", "extension", "airbrake", "error", "reporting", "logging"],
     "homepage": "https://github.com/juanisorondo/yii2-phpbrake",
     "type": "yii2-extension",
-    "license": "MIT License",
+    "license": "MIT",
     "support": {
         "issues": "https://github.com/juanisorondo/yii2-phpbrake/issues",
         "source": "https://github.com/juanisorondo/yii2-phpbrake"
