@@ -13,7 +13,6 @@ use Throwable;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidParamException;
-use yii\web\HttpException;
 
 class AirbrakeService extends Component {
 
@@ -138,13 +137,15 @@ class AirbrakeService extends Component {
      *
      * @return array Built notification
      */
-    public function buildNotice(HttpException $throwable) {
+    public function buildNotice($throwable) {
         if (!$this->enabled) {
             return [];
         }
 
         $notice = $this->_notifier->buildNotice($throwable);
-        if ($throwable->statusCode != 500) {
+        if (property_exists($throwable, 'statusCode') && $throwable->statusCode != 500) {
+            $notice['context']['severity'] = 'warning';
+        } elseif (method_exists($throwable, 'getStatusCode') && $throwable->getStatusCode() != 500) {
             $notice['context']['severity'] = 'warning';
         }
         return $notice;
