@@ -7,7 +7,7 @@ use Airbrake\Errors\Notice;
 use Airbrake\Errors\Warning;
 use Throwable;
 use Yii;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\log\Logger;
 use yii\log\Target;
 
@@ -18,7 +18,8 @@ use yii\log\Target;
  *
  * @package juanisorondo\yii2-phpbrake
  */
-class AirbrakeTarget extends Target {
+class AirbrakeTarget extends Target
+{
 
     /** @var AirbrakeService|string Name of a component providing AirbrakeService or component instance */
     public $airbrakeService = 'airbrakeService';
@@ -27,7 +28,8 @@ class AirbrakeTarget extends Target {
      * Exports log [[messages]] to a specific destination.
      * Child classes must implement this method.
      */
-    public function export() {
+    public function export()
+    {
         $this->assertServiceAvailable();
 
         foreach ($this->messages as list($content, $level, $category, $timestamp, $traces)) {
@@ -56,7 +58,8 @@ class AirbrakeTarget extends Target {
         }
     }
 
-    protected function buildCustomError($content, $level, array $traces) {
+    protected function buildCustomError($content, $level, array $traces)
+    {
         switch ($level) {
             case Logger::LEVEL_ERROR:
                 return new Error($content, $traces);
@@ -79,16 +82,18 @@ class AirbrakeTarget extends Target {
      *
      * @return string the context information. If an empty string, it means no context information.
      */
-    protected function getContextMessage() {
+    protected function getContextMessage()
+    {
         // no context is returned for logging, it is handled internally
         // and added to notices automatically by Airbrake
         return '';
     }
 
-    protected function assertServiceAvailable() {
+    protected function assertServiceAvailable()
+    {
         if (!$this->airbrakeService instanceof AirbrakeService) {
             if (!is_string($this->airbrakeService)) {
-                throw new InvalidParamException("AirbrakeService instance not available. Set 'airbrakeService' property.");
+                throw new InvalidArgumentException("AirbrakeService instance not available. Set 'airbrakeService' property.");
             }
 
             $this->airbrakeService = Yii::$app->get($this->airbrakeService);

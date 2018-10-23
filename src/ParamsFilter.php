@@ -3,9 +3,10 @@
 namespace juanisorondo\phpbrake;
 
 use Closure;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class ParamsFilter extends Object {
+class ParamsFilter extends BaseObject
+{
 
     /**
      * Array of parameter names to replace
@@ -15,12 +16,13 @@ class ParamsFilter extends Object {
 
     /**
      * Replacement string (default 'FILTERED')
-     * @var string 
+     * @var string
      */
     public $replacement = 'FILTERED';
     private $paramsFilter;
 
-    public function init() {
+    public function init()
+    {
         parent::init();
 
         $this->paramsFilter = function ($notice) {
@@ -38,7 +40,8 @@ class ParamsFilter extends Object {
      * with value specified in $replacement.
      * @return callable|Closure Closure to set as filter
      */
-    public function getParamsFilter() {
+    public function getParamsFilter()
+    {
         return $this->paramsFilter;
     }
 

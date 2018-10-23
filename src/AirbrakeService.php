@@ -8,13 +8,13 @@ use Airbrake\Exception;
 use Airbrake\Http\Factory;
 use Airbrake\Instance;
 use Airbrake\Notifier;
-use InvalidArgumentException;
 use Throwable;
 use Yii;
 use yii\base\Component;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 
-class AirbrakeService extends Component {
+class AirbrakeService extends Component
+{
 
     const CLIENT_DEFAULT = 'default';
     const CLIENT_GUZZLE = 'guzzle';
@@ -65,9 +65,10 @@ class AirbrakeService extends Component {
      * is initialized with the given configuration.
      *
      * @throws Exception
-     * @throws InvalidParamException
+     * @throws InvalidArgumentException
      */
-    public function init() {
+    public function init()
+    {
         parent::init();
 
         if (!$this->enabled) {
@@ -115,7 +116,8 @@ class AirbrakeService extends Component {
      *
      * @return array|int|mixed Result of the call
      */
-    public function notify($throwable) {
+    public function notify($throwable)
+    {
         return $this->enabled ? $this->_notifier->notify($throwable) : true;
     }
 
@@ -124,7 +126,8 @@ class AirbrakeService extends Component {
      *
      * @param callable $filter Callable performing the filtering
      */
-    public function addFilter(callable $filter) {
+    public function addFilter(callable $filter)
+    {
         if ($this->enabled) {
             $this->_notifier->addFilter($filter);
         }
@@ -137,7 +140,8 @@ class AirbrakeService extends Component {
      *
      * @return array Built notification
      */
-    public function buildNotice($throwable) {
+    public function buildNotice($throwable)
+    {
         if (!$this->enabled) {
             return [];
         }
@@ -158,7 +162,8 @@ class AirbrakeService extends Component {
      *
      * @return array|int|mixed Result of the call
      */
-    public function sendNotice(array $notice) {
+    public function sendNotice(array $notice)
+    {
         return $this->enabled ? $this->_notifier->sendNotice($notice) : true;
     }
 
@@ -167,8 +172,8 @@ class AirbrakeService extends Component {
      * Uses Airbrake client factory internally to adhere to default
      * implementation as much as possible.
      *
-     * @param string      $revision Revision identifier from source control
-     * @param string      $username Name of the user invoking tracker (default 'system')
+     * @param string $revision Revision identifier from source control
+     * @param string $username Name of the user invoking tracker (default 'system')
      * @param string|null $repository Identifier of the repository (optional)
      *
      * @return bool True, if request was sent successfully
@@ -176,7 +181,8 @@ class AirbrakeService extends Component {
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function trackDeploy($revision, $username = 'system', $repository = null) {
+    public function trackDeploy($revision, $username = 'system', $repository = null)
+    {
         $client = Factory::createHttpClient($this->httpClient);
         $url = sprintf('%s/projects/%s/deploys?key=%s', $this->getAirbrakeApiUrl(), $this->projectId, $this->projectKey);
 
@@ -199,7 +205,8 @@ class AirbrakeService extends Component {
      *
      * @return string URL of the API endpoint
      */
-    protected function getAirbrakeApiUrl($apiVersion = 4) {
+    protected function getAirbrakeApiUrl($apiVersion = 4)
+    {
         $schemeAndHost = !preg_match('~^https?://~i', $this->host) ? "https://{$this->host}" : $this->host;
 
         return sprintf('%s/api/v%d', $schemeAndHost, $apiVersion);
@@ -214,7 +221,8 @@ class AirbrakeService extends Component {
      *
      * @return string Converted environment name
      */
-    protected static function convertEnvironmentName($env) {
+    protected static function convertEnvironmentName($env)
+    {
         switch ($env) {
             case 'prod':
                 return 'production';
@@ -234,7 +242,8 @@ class AirbrakeService extends Component {
      *
      * @return Notifier
      */
-    public function getNotifier() {
+    public function getNotifier()
+    {
         return $this->_notifier;
     }
 

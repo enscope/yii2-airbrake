@@ -2,8 +2,8 @@
 
 namespace juanisorondo\phpbrake;
 
-use InvalidArgumentException;
-use yii\base\InvalidParamException;
+use Yii;
+use yii\base\InvalidArgumentException;
 use yii\console\Controller;
 
 /**
@@ -11,7 +11,8 @@ use yii\console\Controller;
  *
  * @package juanisorondo\yii2-phpbrake
  */
-class ConsoleController extends Controller {
+class ConsoleController extends Controller
+{
 
     /** @var AirbrakeService|null */
     public $airbrakeService = 'airbrakeService';
@@ -28,7 +29,8 @@ class ConsoleController extends Controller {
     /** @var string|null Tracked repository identifier */
     public $repository;
 
-    public function options($actionId) {
+    public function options($actionId)
+    {
         switch ($actionId) {
             case 'track-deploy':
                 return ['inferParameters', 'revision', 'username', 'repository'];
@@ -42,9 +44,9 @@ class ConsoleController extends Controller {
      *
      * @throws \Airbrake\Exception
      * @throws InvalidArgumentException
-     * @throws \yii\base\InvalidParamException
      */
-    public function actionTrackDeploy() {
+    public function actionTrackDeploy()
+    {
         $this->assertServiceAvailable();
 
         if ($this->inferParameters) {
@@ -55,7 +57,7 @@ class ConsoleController extends Controller {
         }
 
         if ($this->revision === null) {
-            throw new InvalidParamException('revision must be specified when can not be inferred');
+            throw new InvalidArgumentException('revision must be specified when can not be inferred');
         }
 
         $this->stdout("*** Sending deploy tracker to Airbrake service...\n");
@@ -63,7 +65,7 @@ class ConsoleController extends Controller {
         $this->stdout("    Version:  {$this->repository}\n");
 
         $result = $this->airbrakeService->trackDeploy(
-                $this->revision, $this->username, $this->repository);
+            $this->revision, $this->username, $this->repository);
 
         if ($result === true) {
             $this->stdout("  + Airbrake deploy tracker was sent successfully.\n");
@@ -72,21 +74,24 @@ class ConsoleController extends Controller {
         }
     }
 
-    protected function getCurrentRevision() {
+    protected function getCurrentRevision()
+    {
         return exec('git rev-parse HEAD');
     }
 
-    protected function getRepositoryUrl() {
+    protected function getRepositoryUrl()
+    {
         return exec('git remote get-url origin');
     }
 
-    protected function assertServiceAvailable() {
+    protected function assertServiceAvailable()
+    {
         if (!$this->airbrakeService instanceof AirbrakeService) {
             if (!is_string($this->airbrakeService)) {
-                throw new InvalidParamException("AirbrakeService instance not available. Set 'airbrakeService' property.");
+                throw new InvalidArgumentException("AirbrakeService instance not available. Set 'airbrakeService' property.");
             }
 
-            $this->airbrakeService = \Yii::$app->get($this->airbrakeService);
+            $this->airbrakeService = Yii::$app->get($this->airbrakeService);
             $this->assertServiceAvailable();
         }
     }
