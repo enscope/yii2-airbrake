@@ -1,6 +1,6 @@
 <?php
 
-namespace juanisorondo\phpbrake;
+namespace biller\phpbrake;
 
 use Airbrake\Errors\Error;
 use Airbrake\Errors\Notice;
@@ -16,7 +16,7 @@ use yii\log\Target;
  *
  * Airbrake logging target for Yii2 logger.
  *
- * @package juanisorondo\yii2-phpbrake
+ * @package biller\yii2-phpbrake
  */
 class AirbrakeTarget extends Target
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace juanisorondo\phpbrake;
+namespace biller\phpbrake;
 
 use Closure;
 use yii\base\BaseObject;

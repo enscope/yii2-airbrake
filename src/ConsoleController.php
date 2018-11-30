@@ -1,6 +1,6 @@
 <?php
 
-namespace juanisorondo\phpbrake;
+namespace biller\phpbrake;
 
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -9,7 +9,7 @@ use yii\console\Controller;
 /**
  * Airbrake Service support for Yii2.
  *
- * @package juanisorondo\yii2-phpbrake
+ * @package biller\yii2-phpbrake
  */
 class ConsoleController extends Controller
 {

@@ -3,7 +3,7 @@ Airbrake integration for Yii2, which wraps around official
 [Airbrake PHP library (airbrake/phpbrake)](https://github.com/airbrake/phpbrake).
 
 ## Installation
-    composer require juanisorondo/yii2-airbrake
+    composer require biller/yii2-airbrake
 
 ## Usage
 While it is not explicitly required, it is recommended to configure the `AirbrakeService`
@@ -16,7 +16,7 @@ return [
     'components' => [
         // ...
         'airbrakeService' => [
-            'class' => 'juanisorondo\phpbrake\AirbrakeService',
+            'class' => biller\phpbrake\AirbrakeService::class,
 
             'enabled' => true, // default TRUE
 
@@ -35,7 +35,7 @@ return [
             'filters' => [ // default NULL
                 // 'PHPSESSID' and '_csrf' parameters should not be transferred to airbrake
                 [
-                    'class' => 'juanisorondo\phpbrake\ParamsFilter',
+                    'class' => biller\phpbrake\ParamsFilter::class,
                     'params' => ['PHPSESSID', '_csrf'],
                 ],
             ],
@@ -79,7 +79,7 @@ To use `ConsoleController`, `AirbrakeService` should be configured as component.
         'controllerMap' => [
             // ...
             'airbrake' => [
-                'class' => ConsoleController::className(),
+                'class' => ConsoleController::class,
                 'airbrakeService' => [component-name], // default "airbrakeService"
             ],
         ],
@@ -106,7 +106,7 @@ return [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'juanisorondo\phpbrake\AirbrakeTarget',
+                    'class' => biller\phpbrake\AirbrakeTarget::class,
                     'levels' => ['error'],
                 ],
             ],

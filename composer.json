@@ -1,22 +1,29 @@
 {
-    "name": "juanisorondo/yii2-phpbrake",
-    "description": "Yii2 Phpbrake integration",
-    "keywords": ["yii2", "extension", "airbrake", "error", "reporting", "logging"],
-    "homepage": "https://github.com/juanisorondo/yii2-phpbrake",
-    "type": "yii2-extension",
-    "license": "MIT",
-    "support": {
-        "issues": "https://github.com/juanisorondo/yii2-phpbrake/issues",
-        "source": "https://github.com/juanisorondo/yii2-phpbrake"
-    },
-    "minimum-stability": "stable",
-    "require": {
-        "yiisoft/yii2": ">=2.0.5",
-        "airbrake/phpbrake": "^0.5"
-    },
-    "autoload": {
-        "classmap": [
-            "src/"
-        ]
+  "name": "biller/yii2-phpbrake",
+  "description": "Yii2 PHPBrake integration",
+  "keywords": [
+    "yii2",
+    "extension",
+    "airbrake",
+    "error",
+    "reporting",
+    "logging"
+  ],
+  "homepage": "https://github.com/biller/yii2-phpbrake",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/biller/yii2-phpbrake/issues",
+    "source": "https://github.com/biller/yii2-phpbrake"
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "yiisoft/yii2": ">=2.0.5",
+    "airbrake/phpbrake": "^0.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "biller\\phpbrake\\": "src"
     }
+  }
 }
