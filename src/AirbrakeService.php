@@ -7,7 +7,6 @@ use Airbrake\Errors\Base;
 use Airbrake\Exception;
 use Airbrake\Http\Factory;
 use Airbrake\Instance;
-use Airbrake\Notifier;
 use Throwable;
 use Yii;
 use yii\base\Component;
