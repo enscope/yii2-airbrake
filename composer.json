@@ -25,5 +25,11 @@
     "psr-4": {
       "biller\\phpbrake\\": "src"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
 }
