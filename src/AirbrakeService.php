@@ -5,7 +5,6 @@ namespace biller\phpbrake;
 use Airbrake\ErrorHandler;
 use Airbrake\Errors\Base;
 use Airbrake\Exception;
-use Airbrake\Http\Factory;
 use Airbrake\Instance;
 use Throwable;
 use Yii;
@@ -14,11 +13,6 @@ use yii\base\InvalidArgumentException;
 
 class AirbrakeService extends Component
 {
-
-    const CLIENT_DEFAULT = 'default';
-    const CLIENT_GUZZLE = 'guzzle';
-    const CLIENT_CURL = 'curl';
-
     /** @var bool Enabled flag to allow simpler configuration */
     public $enabled = true;
 
@@ -42,9 +36,6 @@ class AirbrakeService extends Component
 
     /** @var string Service server host */
     public $host = 'api.airbrake.io';
-
-    /** @var string HTTP client to use */
-    public $httpClient;
 
     /** @var bool If true, global instance is set on init() */
     public $setGlobalInstance = true;
@@ -86,7 +77,6 @@ class AirbrakeService extends Component
             'environment' => $this->environment,
             'rootDirectory' => Yii::getAlias($this->rootDirectory),
             'host' => $this->host,
-            'httpClient' => $this->httpClient,
         ]);
 
         if (is_array($this->filters)) {
@@ -167,36 +157,6 @@ class AirbrakeService extends Component
     }
 
     /**
-     * Sends deployment tracking request to Airbrake.
-     * Uses Airbrake client factory internally to adhere to default
-     * implementation as much as possible.
-     *
-     * @param string $revision Revision identifier from source control
-     * @param string $username Name of the user invoking tracker (default 'system')
-     * @param string|null $repository Identifier of the repository (optional)
-     *
-     * @return bool True, if request was sent successfully
-     *
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function trackDeploy($revision, $username = 'system', $repository = null)
-    {
-        $client = Factory::createHttpClient($this->httpClient);
-        $url = sprintf('%s/projects/%s/deploys?key=%s', $this->getAirbrakeApiUrl(), $this->projectId, $this->projectKey);
-
-        $result = $client->send($url, json_encode([
-            'environment' => $this->environment,
-            'username' => $username,
-            'repository' => $repository,
-            'revision' => $revision,
-            'version' => $this->appVersion,
-        ]));
-
-        return $result !== false;
-    }
-
-    /**
      * Creates and returns API endpoint for specified version
      * of Airbrake API with hostname specified in parameter.
      *
@@ -245,5 +205,4 @@ class AirbrakeService extends Component
     {
         return $this->_notifier;
     }
-
 }

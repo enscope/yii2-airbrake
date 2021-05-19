@@ -1,14 +1,17 @@
 # yii2-airbrake
+
 Airbrake integration for Yii2, which wraps around official
 [Airbrake PHP library (airbrake/phpbrake)](https://github.com/airbrake/phpbrake).
 
 ## Installation
+
     composer require biller/yii2-airbrake
 
 ## Usage
+
 While it is not explicitly required, it is recommended to configure the `AirbrakeService`
-as a component in environment (or even common) configuration, so it is easily accessible
-from the whole application (using i.e. `Yii::$app->get('airbrakeService')`).
+as a component in environment (or even common) configuration, so it is easily accessible from the whole application (
+using i.e. `Yii::$app->get('airbrakeService')`).
 
 ```php
 return [
@@ -43,6 +46,7 @@ return [
     ],
 ];
 ```
+
 *Configuration options marked with asterisk are required, all other options are optional.*
 
 * `rootDirectory`: should be set to your sources root to allow shortening of file paths
@@ -57,19 +61,21 @@ return [
 *For additional information about the API, please consult official Airbrake PHP library documentation.*
 
 ### AirbrakeFilterFactory
+
 Factory class that can be used to create various filtering rules.
 
 #### `AirbrakeFilterFactory::createParamsFilter(array $params, $replacement = 'FILTERED')`
+
 Method will create filtering callable that filters parameters, specified by
-`$params` and replaces it with specified `$replacement`. Example usage is
-available above.
+`$params` and replaces it with specified `$replacement`. Example usage is available above.
 
 ## Console Support
-Integration can be added to Yii console, where it currently provides a command
-to track deployment (new feature in Airbrake API 4 that allows to mark error
-timeline with deployments).
+
+Integration can be added to Yii console, where it currently provides a command to track deployment (new feature in
+Airbrake API 4 that allows to mark error timeline with deployments).
 
 ### Usage
+
 To use `ConsoleController`, `AirbrakeService` should be configured as component.
 
     import enscope\Yii2\Ext\Airbrake\ConsoleController;
@@ -85,8 +91,8 @@ To use `ConsoleController`, `AirbrakeService` should be configured as component.
         ],
     ];
 
-While parameters can be hard-coded in configuration, console controller
-supports `inferParameters`, `username`, `revision` and `repository`
+While parameters can be hard-coded in configuration, console controller supports `inferParameters`, `username`
+, `revision` and `repository`
 parameters to be set by arguments on command line.
 
 * `airbrakeService`: name of the component or initialized instance
@@ -96,10 +102,13 @@ parameters to be set by arguments on command line.
 * `username`: name of the user tracking deploy (default "system")
 
 ## Logging Target
+
 You can configure Yii2 logger to log errors automatically to Airbrake Service.
 
 ### Usage
+
 To use `ConsoleController`, `AirbrakeService` should be configured as component.
+
 ```php
 return [
     'components' => [
@@ -114,10 +123,14 @@ return [
     ],
 ];
 ```
-The target currently does not expose any other configuration options
-other then those exposed by `yii\log\Target`, except the service component:
+
+The target currently does not expose any other configuration options other then those exposed by `yii\log\Target`,
+except the service component:
+
 * `airbrakeService`: name of the component or initialized instance
 
 ## License
-Yii2 Airbrake integration is licensed under [The MIT License (MIT)](https://github.com/enscope/yii2-airbrake/blob/master/LICENSE)
+
+Yii2 Airbrake integration is licensed
+under [The MIT License (MIT)](https://github.com/biller/yii2-airbrake/blob/master/LICENSE)
 as is the original PHP Airbrake library and follows the versioning of that library.
