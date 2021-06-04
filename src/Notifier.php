@@ -17,8 +17,8 @@ class Notifier extends AirbrakeNotifier
                 $notice['context']['user']['id'] = $user->id;
             }
             if (isset($user->identity)) {
-                $notice['context']['user']['name'] = $user->identity->nombre;
-                $notice['context']['user']['email'] = $user->identity->email;
+                $notice['context']['user']['name'] = $user->identity->nombre ?? null;
+                $notice['context']['user']['email'] = $user->identity->email ?? null;
             }
         }
 
