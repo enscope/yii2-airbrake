@@ -28,6 +28,9 @@ class AirbrakeService extends Component
     /** @var string|null Run-time environment (optional) */
     public $environment;
 
+    /** @var mixed Run-time user (optional) */
+    public $user;
+
     /** @var ParamsFilter[] Items of the array will be added as filters */
     public $filters;
 
@@ -77,6 +80,7 @@ class AirbrakeService extends Component
             'environment' => $this->environment,
             'rootDirectory' => Yii::getAlias($this->rootDirectory),
             'host' => $this->host,
+            'user' => $this->user,
         ]);
 
         if (is_array($this->filters)) {

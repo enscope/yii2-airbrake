@@ -7,6 +7,15 @@ use Yii;
 
 class Notifier extends AirbrakeNotifier
 {
+    private $user;
+
+    public function __construct($opt)
+    {
+        parent::__construct($opt);
+
+        $this->user = $opt['user'];
+    }
+
     public function buildNotice($exc)
     {
         $notice = parent::buildNotice($exc);
@@ -17,12 +26,10 @@ class Notifier extends AirbrakeNotifier
                 $notice['context']['user']['id'] = $user->id;
             }
             if (isset($user->identity)) {
-                $notice['context']['user']['name'] = $user->identity->nombre;
-                $notice['context']['user']['email'] = $user->identity->email;
+                $notice['context']['user'] = $this->user->call($this, $user->identity);
             }
         }
 
         return $notice;
     }
-
 }
